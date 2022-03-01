@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using X;
 using UnityEngine;
+using JSI.AppObject;
+using System.Collections.Generic;
 
 namespace JSI.Cmd {
     public class JSICmdToTumbleCamera : XLoggableCmd {
@@ -40,6 +42,33 @@ namespace JSI.Cmd {
 
             cp.setEye(nextEye);
             cp.setView(nextView);
+
+            JSIAppPolyline3D rod = cp.getRod();
+            List<Vector3> pts1 = new List<Vector3>();
+            pts1.Add(cp.getPivot());
+            pts1.Add(cp.getEye());
+            rod.setPts(pts1);
+
+            JSIAppPolyline3D column = cp.getColumn();
+            List<Vector3> pts2 = new List<Vector3>();
+            pts2.Add(cp.getEye());
+            pts2.Add(new Vector3(cp.getEye().x, 0f, cp.getEye().z));
+            column.setPts(pts2);
+
+            JSIAppPolyline3D viewRay = cp.getViewRay();
+            List<Vector3> pts3 = new List<Vector3>();
+            pts3.Add(cp.getEye());
+            Ray ray = new Ray(cp.getEye(), cp.getView());
+            Plane ground = new Plane(Vector3.up, Vector3.zero);
+            float rayDist = float.NaN;
+            ground.Raycast(ray, out rayDist);
+            if(rayDist > 1e4f || rayDist < 0) {
+                rayDist = 1000f;
+            }
+            Vector3 onPoint = ray.GetPoint(rayDist);
+            pts3.Add(onPoint);
+            viewRay.setPts(pts3);
+
 
             return true;
         }
