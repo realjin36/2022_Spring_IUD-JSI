@@ -9,6 +9,7 @@ namespace JSI.Cmd {
         // fields
         private Vector2 mPrevPt = Vector2.zero;
         private Vector2 mCurPt = Vector2.zero;
+        private static JSIAppRect3D mPivotPlane = new JSIAppRect3D("pivotPlane", 5f, 5f, new Color(0.855f, 0.988f, 1f, 0.157f));
 
         // private constructor
         private JSICmdToDollyCamera(XApp app) : base(app) {
@@ -65,15 +66,22 @@ namespace JSI.Cmd {
             List<Vector3> pts3 = new List<Vector3>();
             pts3.Add(cp.getEye());
             Ray ray = new Ray(cp.getEye(), cp.getView());
-            Plane ground = new Plane(Vector3.up, Vector3.zero);
+            // Plane ground = new Plane(Vector3.up, Vector3.zero);
             float rayDist = float.NaN;
-            ground.Raycast(ray, out rayDist);
+            pivotPlane.Raycast(ray, out rayDist);
             if(rayDist > 1e4f || rayDist < 0) {
                 rayDist = 1000f;
             }
             Vector3 onPoint = ray.GetPoint(rayDist);
             pts3.Add(onPoint);
             viewRay.setPts(pts3);
+
+            // if (mPivotPlane != null) {
+            //     mPivotPlane.destroyGameObject();
+            // }
+            // Color col = new Color(0.855f, 0.988f, 1f, 0.157f);
+            // mPivotPlane = new JSIAppRect3D("pivotPlane", 5f, 5f, col);
+            mPivotPlane.getGameObject().transform.rotation = Quaternion.FromToRotation(Vector3.back, pivotPlane.normal);
 
             return true;
         }
