@@ -5,7 +5,7 @@ using X;
 namespace JSI.Scenario {
     public partial class JSIDefaultScenario : XScenario {
         public class ReadyScene : JSIScene {
-            // singleton pattern 
+            // singleton pattern
             private static ReadyScene mSingleton = null;
             public static ReadyScene getSingleton() {
                 Debug.Assert(ReadyScene.mSingleton != null);
@@ -38,12 +38,18 @@ namespace JSI.Scenario {
                         //JSICmdToCreateEmptyStandingCard.execute(jsi);
                         JSICmdToCreateStandingCard.execute(jsi);
                         break;
+                    case KeyCode.S:
+                        JSICmdToSaveFile.execute(jsi);
+                        break;
+                    case KeyCode.O:
+                        JSICmdToOpenFile.execute(jsi);
+                        break;
                 }
             }
 
             public override void handlePenDown(Vector2 pt) {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
-                foreach (JSIStandingCard sc in 
+                foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     if (jsi.getCursor().hits(sc.getScaleHandle())) {
                         JSICmdToSelectSmallestStandingCardByScaleHandle.
@@ -68,9 +74,9 @@ namespace JSI.Scenario {
             public override void getReady() {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
 
-                // deactivate stands. 
-                // activate scale handles. 
-                foreach (JSIStandingCard sc in 
+                // deactivate stands.
+                // activate scale handles.
+                foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     sc.getStand().getGameObject().SetActive(false);
                     sc.getScaleHandle().getGameObject().SetActive(true);

@@ -28,6 +28,5 @@ namespace JSI.Cmd {
             // ...
             return sb.ToString();
         }
-
     }
 }

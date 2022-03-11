@@ -8,8 +8,9 @@ namespace JSI {
             new List<KeyCode>() {
                 KeyCode.LeftControl, // for rotating
                 KeyCode.LeftAlt, // for translating
-                KeyCode.Return // for creating a standing card
-
+                KeyCode.Return, // for creating a standing card
+                KeyCode.S, // for saving file
+                KeyCode.O, // for opening file
             };
 
         // fields
@@ -18,7 +19,7 @@ namespace JSI {
             this.mEventListener = eventListener;
         }
 
-        // constructor 
+        // constructor
         public JSIKeyEventSource() {
         }
 

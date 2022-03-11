@@ -6,11 +6,17 @@ namespace JSI.AppObject {
     public class JSIAppPolyline3D : JSIAppGeom3D {
         // fields
         private float mWidth = float.NaN;
+        public float getWidth() {
+            return this.mWidth;
+        }
         public void setWidth(float width) {
             this.mWidth = width;
             this.refreshRenderer();
         }
         private Color mColor = Color.red; // easily noticeable color
+        public Color getColor() {
+            return this.mColor;
+        }
         public void setColor(Color color) {
             this.mColor = color;
             this.refreshRenderer();
