@@ -22,7 +22,7 @@ namespace JSI.Cmd {
 
         // static method to construct and execute this command
         public static bool execute(XApp app) {
-            JSICmdToScaleStandingCard cmd = 
+            JSICmdToScaleStandingCard cmd =
                 new JSICmdToScaleStandingCard(app);
             return cmd.execute();
         }
@@ -46,13 +46,13 @@ namespace JSI.Cmd {
                 standingCard.getGameObject().transform.forward,
                 standingCard.getGameObject().transform.position);
 
-            // project the previous screen point to the plane. 
+            // project the previous screen point to the plane.
             Ray prevPtRay = cp.getCamera().ScreenPointToRay(this.mPrevPt);
             float prevPtDist = float.NaN;
             cardPlane.Raycast(prevPtRay, out prevPtDist);
             Vector3 prevPtOnPlane = prevPtRay.GetPoint(prevPtDist);
 
-            // project the current screen point to the plane. 
+            // project the current screen point to the plane.
             Ray curPtRay = cp.getCamera().ScreenPointToRay(this.mCurPt);
             float curPtDist = float.NaN;
             cardPlane.Raycast(curPtRay, out curPtDist);
@@ -61,7 +61,7 @@ namespace JSI.Cmd {
             // calculate the scale factor.
             float scaleFactor = curPtOnPlane.y / prevPtOnPlane.y;
 
-            // resized the standing card. 
+            // resized the standing card.
             float newCardWidth = scaleFactor * rect.getWidth();
             float newCardHeight = scaleFactor * rect.getHeight();
             card.setSize(newCardWidth, newCardHeight);
@@ -75,17 +75,17 @@ namespace JSI.Cmd {
             standingCard.getGameObject().transform.position =
                 newStandingCardPosition;
 
-            // change the postion of the stand. 
+            // change the postion of the stand.
             Vector3 standLocalPos =
                 stand.getGameObject().transform.localPosition;
             Vector3 newStandLocalPos = new Vector3(
-                standLocalPos.x, scaleFactor * standLocalPos.y, 
+                standLocalPos.x, scaleFactor * standLocalPos.y,
                 standLocalPos.z);
             stand.getGameObject().transform.localPosition =
                 newStandLocalPos;
             stand.setRadius(newCardWidth / 2f);
 
-            // change the postion of the scale handle. 
+            // change the postion of the scale handle.
             Vector3 scaleHandleLocalPos =
                 scaleHandle.getGameObject().transform.localPosition;
             Vector3 newScaleHandleLocalPos = new Vector3(
@@ -94,7 +94,7 @@ namespace JSI.Cmd {
             scaleHandle.getGameObject().transform.localPosition =
                 newScaleHandleLocalPos;
 
-            // scale the 3D point curves. 
+            // scale the 3D point curves.
             if (ptCurve3Ds != null) {
                 foreach (JSIAppPolyline3D ptCurve3D in ptCurve3Ds) {
                     JSIPolyline3D polyline =
@@ -102,24 +102,30 @@ namespace JSI.Cmd {
                     List<Vector3> scaledPt3Ds = new List<Vector3>();
                     foreach (Vector3 pt3D in polyline.getPts()) {
                         Vector3 scaledPt3D = new Vector3(
-                            scaleFactor * pt3D.x, scaleFactor * pt3D.y, 
+                            scaleFactor * pt3D.x, scaleFactor * pt3D.y,
                             pt3D.z);
                         scaledPt3Ds.Add(scaledPt3D);
                     }
                     ptCurve3D.setPts(scaledPt3Ds);
                 }
             }
-            
+
             return true;
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            sb.Append(this.mPrevPt).Append("\t");
-            sb.Append(this.mCurPt);
-            return sb.ToString();
+        protected override XJson createLogData() {
+            XJson data = new XJson();
+            data.addMember("prevPt", this.mPrevPt);
+            data.addMember("curPt", this.mCurPt);
+            JSIStandingCard sc = JSIEditStandingCardScenario.getSingleton().
+                getSelectedStandingCard();
+            JSIRect3D rect = (JSIRect3D)sc.getCard().getGeom();
+            float w = rect.getWidth();
+            float h = rect.getHeight();
+            // data.addMember("cardId", sc.getId());
+            data.addMember("cardWidth", w);
+            data.addMember("cardHeight", h);
+            return data;
         }
-
     }
 }

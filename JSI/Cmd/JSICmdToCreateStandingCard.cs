@@ -23,48 +23,48 @@ namespace JSI.Cmd {
             JSIApp jsi = (JSIApp)this.mApp;
             JSIPerspCameraPerson cp = jsi.getPerspCameraPerson();
 
-            // check if there exist 2D point curves. 
+            // check if there exist 2D point curves.
             if (jsi.getPtCurve2DMgr().getPtCurve2Ds().Count == 0) {
                 return false;
             }
 
-            // find the lowest 2D point. 
+            // find the lowest 2D point.
             Vector2 lowestPt2D = this.calcLowestPt2D(
                 jsi.getPtCurve2DMgr().getPtCurve2Ds());
 
-            // calculate the lowest 3D point. 
+            // calculate the lowest 3D point.
             Ray lowestPtRay = cp.getCamera().ScreenPointToRay(lowestPt2D);
             Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
             float lowestPtDis = float.NaN;
             groundPlane.Raycast(lowestPtRay, out lowestPtDis);
             Vector3 lowestPt3D = lowestPtRay.GetPoint(lowestPtDis);
 
-            // caludate the normal vector of the card plane. 
+            // caludate the normal vector of the card plane.
             Vector3 normalDir = Vector3.ProjectOnPlane(
                 -cp.getView(), Vector3.up).normalized;
 
             // calculate 3D point curves by projecting 2D point curves
-            // to the card plane. 
+            // to the card plane.
             Plane cardPlane = new Plane(normalDir, lowestPt3D);
             List<JSIAppPolyline3D> ptCurve3Ds = this.calcProjectedPtCurve3Ds(
                 jsi.getPtCurve2DMgr().getPtCurve2Ds(), cardPlane,
                 cp.getCamera());
 
             // clear 2D point curves.
-            foreach (JSIAppPolyline2D ptCurve2D in 
+            foreach (JSIAppPolyline2D ptCurve2D in
                 jsi.getPtCurve2DMgr().getPtCurve2Ds()) {
                 ptCurve2D.destroyGameObject();
             }
             jsi.getPtCurve2DMgr().getPtCurve2Ds().Clear();
 
-            // calculate the card dimensions. 
+            // calculate the card dimensions.
             Vector3 cardZDir = -normalDir;
             Vector3 cardYDir = Vector3.up;
             Vector3 cardXDir = Vector3.Cross(cardYDir, cardZDir).normalized;
             Vector3 cardCtr = this.calcCardCtr(ptCurve3Ds, lowestPt3D,
                 cardXDir, cardYDir, cardZDir);
 
-            // calculate the local 3D point curves. 
+            // calculate the local 3D point curves.
             List<JSIAppPolyline3D> localPtCurve3Ds =
                 this.createLocalPtCurve3Ds(ptCurve3Ds, cardCtr, cardXDir,
                 cardYDir, cardZDir);
@@ -75,23 +75,24 @@ namespace JSI.Cmd {
             }
             ptCurve3Ds.Clear();
 
-            // create a new standing card. 
+            // create a new standing card.
             float cardWidth = this.calcCardWidth(localPtCurve3Ds);
             float cardHeight = this.calcCardHeight(localPtCurve3Ds);
             Quaternion q = Quaternion.LookRotation(cardZDir, cardYDir);
             JSIStandingCard sc = new JSIStandingCard("StandingCard",
                 cardWidth, cardHeight, cardCtr, q, localPtCurve3Ds);
 
-            // add the standing card to its manager. 
+            // add the standing card to its manager.
             jsi.getStandingCardMgr().getStandingCards().Add(sc);
 
             return true;
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            return sb.ToString();
+        protected override XJson createLogData() {
+            JSIApp jsi = (JSIApp)this.mApp;
+            XJson data = new XJson();
+            // data.addMember("cardId", this.mSc.getId());
+            return data;
         }
 
         // methods
@@ -130,8 +131,8 @@ namespace JSI.Cmd {
             return ptCurve3Ds;
         }
 
-        private Vector3 calcCardCtr(List<JSIAppPolyline3D> ptCurve3Ds, 
-            Vector3 lowestPt3D, Vector3 cardXDir, Vector3 cardYDir, 
+        private Vector3 calcCardCtr(List<JSIAppPolyline3D> ptCurve3Ds,
+            Vector3 lowestPt3D, Vector3 cardXDir, Vector3 cardYDir,
             Vector3 cardZDir) {
 
             List<float> xs = new List<float>();
@@ -156,7 +157,7 @@ namespace JSI.Cmd {
         }
 
         private List<JSIAppPolyline3D> createLocalPtCurve3Ds(
-            List<JSIAppPolyline3D> ptCurve3Ds, Vector3 cardCtr, 
+            List<JSIAppPolyline3D> ptCurve3Ds, Vector3 cardCtr,
             Vector3 cardXDir, Vector3 cardYDir, Vector3 cardZDir) {
 
             List<JSIAppPolyline3D> localPtCurve3Ds =

@@ -22,11 +22,10 @@ namespace JSI.Cmd {
             throw new System.NotImplementedException();
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
+        protected override XJson createLogData() {
+            XJson data = new XJson();
             // ...
-            return sb.ToString();
+            return data;
         }
     }
 }

@@ -37,12 +37,11 @@ namespace JSI.Cmd {
             }
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            sb.Append(this.mFilePath).Append("\t");
-            // ...
-            return sb.ToString();
+        protected override XJson createLogData() {
+            XJson data = new XJson();
+            // "\" is a JSON escape character, so replace it with "/"
+            data.addMember("filePath", this.mFilePath.Replace('\\', '/'));
+            return data;
         }
 
         private bool readFile(string filePath) {

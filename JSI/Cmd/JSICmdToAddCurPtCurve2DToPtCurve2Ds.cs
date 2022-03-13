@@ -13,14 +13,14 @@ namespace JSI.Cmd {
 
         // static method to construct and execute this command
         public static bool execute(XApp app) {
-            JSICmdToAddCurPtCurve2DToPtCurve2Ds cmd = 
+            JSICmdToAddCurPtCurve2DToPtCurve2Ds cmd =
                 new JSICmdToAddCurPtCurve2DToPtCurve2Ds(app);
             return cmd.execute();
         }
 
         protected override bool defineCmd() {
             JSIApp jsi = (JSIApp)this.mApp;
-            JSIAppPolyline2D curPtCurve2D = 
+            JSIAppPolyline2D curPtCurve2D =
                 jsi.getPtCurve2DMgr().getCurPtCurve2D();
             JSIPolyline2D polyline = (JSIPolyline2D)curPtCurve2D.getGeom();
             if (polyline.getPts().Count >= 2) {
@@ -34,11 +34,12 @@ namespace JSI.Cmd {
             }
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            return sb.ToString();
+        protected override XJson createLogData() {
+            JSIApp jsi = (JSIApp)this.mApp;
+            XJson data = new XJson();
+            data.addMember("ptCurve2DCount", jsi.getPtCurve2DMgr().
+                getPtCurve2Ds().Count);
+            return data;
         }
-
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 namespace X {
     public class XLogMgr {
         // fields
-        private List<string> mLogs = null;
-        public List<string> getLogs() {
+        private List<XLog> mLogs = null;
+        public List<XLog> getLogs() {
             return this.mLogs;
         }
         private bool mPrintOn = false;
@@ -16,12 +16,12 @@ namespace X {
             this.mPrintOn = isPrintOn;
         }
 
-        // constructor 
+        // constructor
         public XLogMgr() {
-            this.mLogs = new List<string>();
+            this.mLogs = new List<XLog>();
         }
 
-        public void addLog(string log) {
+        public void addLog(XLog log) {
             this.mLogs.Add(log);
             if (this.mPrintOn) {
                 Debug.Log(log);

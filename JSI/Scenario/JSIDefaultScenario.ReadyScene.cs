@@ -43,6 +43,7 @@ namespace JSI.Scenario {
                         break;
                     case KeyCode.O:
                         JSICmdToOpenFile.execute(jsi);
+                        JSICmdToAutoSave.execute(jsi);
                         break;
                 }
             }
@@ -82,6 +83,10 @@ namespace JSI.Scenario {
                     sc.getScaleHandle().getGameObject().SetActive(true);
                     sc.highlightScaleHandle(false);
                 }
+
+                // auto save log & sketch
+                // should be added to all 'M' scenes
+                JSICmdToAutoSave.execute(jsi);
             }
 
             public override void wrapUp() {

@@ -44,13 +44,16 @@ namespace JSI.Cmd {
             return true;
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            sb.Append(this.mPrevPt).Append("\t");
-            sb.Append(this.mCurPt);
-            return sb.ToString();
+        protected override XJson createLogData() {
+            JSIApp jsi = (JSIApp)this.mApp;
+            XJson data = new XJson();
+            JSIPerspCameraPerson cp = jsi.getPerspCameraPerson();
+            data.addMember("prevPt", this.mPrevPt);
+            data.addMember("curPt", this.mCurPt);
+            data.addMember("eye", cp.getEye());
+            data.addMember("view", cp.getView());
+            data.addMember("up", cp.getUp());
+            return data;
         }
-
     }
 }

@@ -17,7 +17,7 @@ namespace JSI.Cmd {
 
         // static method to construct and execute this command
         public static bool execute(XApp app) {
-            JSICmdToCreateCurPtCurve2D cmd = 
+            JSICmdToCreateCurPtCurve2D cmd =
                 new JSICmdToCreateCurPtCurve2D(app);
             return cmd.execute();
         }
@@ -33,12 +33,10 @@ namespace JSI.Cmd {
             return true;
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            sb.Append(this.mPt);
-            return sb.ToString();
+        protected override XJson createLogData() {
+            XJson data = new XJson();
+            data.addMember("pt", this.mPt);
+            return data;
         }
-
     }
 }

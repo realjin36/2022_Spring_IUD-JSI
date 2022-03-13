@@ -23,5 +23,8 @@ namespace X {
         protected void addScene(XScene scene) {
             this.mScenes.Add(scene);
         }
+        public string getName() {
+            return this.GetType().Name;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace JSI.Cmd {
 
         // static method to construct and execute this command
         public static bool execute(XApp app) {
-            JSICmdToRotateStandingCard cmd = 
+            JSICmdToRotateStandingCard cmd =
                 new JSICmdToRotateStandingCard(app);
             return cmd.execute();
         }
@@ -32,19 +32,19 @@ namespace JSI.Cmd {
             // create the ground plane.
             Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 
-            // project the previous screen point to the plane. 
+            // project the previous screen point to the plane.
             Ray prevPtRay = cp.getCamera().ScreenPointToRay(this.mPrevPt);
             float prevPtDist = float.NaN;
             groundPlane.Raycast(prevPtRay, out prevPtDist);
             Vector3 prevPtOnPlane = prevPtRay.GetPoint(prevPtDist);
 
-            // project the current screen point to the plane. 
+            // project the current screen point to the plane.
             Ray curPtRay = cp.getCamera().ScreenPointToRay(this.mCurPt);
             float curPtDist = float.NaN;
             groundPlane.Raycast(curPtRay, out curPtDist);
             Vector3 curPtOnPlane = curPtRay.GetPoint(curPtDist);
 
-            // calculate rotation 
+            // calculate rotation
             JSIEditStandingCardScenario scenario =
                 JSIEditStandingCardScenario.getSingleton();
             JSIStandingCard standingCardToRotate =
@@ -62,19 +62,21 @@ namespace JSI.Cmd {
 
             // update the rotation of the selected standing card.
             standingCardToRotate.getGameObject().transform.rotation =
-                delRot * 
+                delRot *
                 standingCardToRotate.getGameObject().transform.rotation;
 
             return true;
         }
 
-        protected override string createLog() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(this.GetType().Name).Append("\t");
-            sb.Append(this.mPrevPt).Append("\t");
-            sb.Append(this.mCurPt);
-            return sb.ToString();
+        protected override XJson createLogData() {
+            XJson data = new XJson();
+            data.addMember("prevPt", this.mPrevPt);
+            data.addMember("curPt", this.mCurPt);
+            JSIStandingCard sc = JSIEditStandingCardScenario.getSingleton().
+                getSelectedStandingCard();
+            // data.addMember("cardId", sc.getId());
+            data.addMember("cardRot", sc.getGameObject().transform.rotation);
+            return data;
         }
-
     }
 }

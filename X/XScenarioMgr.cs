@@ -13,8 +13,12 @@ namespace X {
             if (this.mCurScene != null) {
                 this.mCurScene.wrapUp();
             }
-            scene.getReady();
+            // current scene should be changed before calling getReady(),
+            // because when commands execute in getReady(), the scenario/scene
+            // logged would be that of the previous scene
+            // also, upon app init, logged scenario/scene would be null
             this.mCurScene = scene;
+            this.mCurScene.getReady();
         }
 
         // contructor

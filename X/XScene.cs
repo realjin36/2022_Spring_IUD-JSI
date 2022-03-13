@@ -13,7 +13,7 @@
             this.mReturnScene = scene;
         }
 
-        // constructor 
+        // constructor
         protected XScene(XScenario scenario) {
             this.mScenario = scenario;
             this.mReturnScene = null;
@@ -22,5 +22,10 @@
         // abstract methods
         public abstract void getReady();
         public abstract void wrapUp();
+
+        // concrete methods
+        public string getName() {
+            return this.GetType().Name;
+        }
     }
 }
