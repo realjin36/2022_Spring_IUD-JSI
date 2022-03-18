@@ -37,6 +37,13 @@ namespace JSI.Scenario {
                     case KeyCode.Return:
                         //JSICmdToCreateEmptyStandingCard.execute(jsi);
                         JSICmdToCreateStandingCard.execute(jsi);
+                        JSICmdToTakeSnapshot.execute(jsi);
+                        break;
+                    case KeyCode.Z:
+                        JSICmdToUndo.execute(jsi);
+                        break;
+                    case KeyCode.Y:
+                        JSICmdToRedo.execute(jsi);
                         break;
                     case KeyCode.S:
                         JSICmdToSaveFile.execute(jsi);

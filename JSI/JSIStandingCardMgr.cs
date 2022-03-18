@@ -12,5 +12,15 @@ namespace JSI {
         public JSIStandingCardMgr() {
             this.mStandingCards = new List<JSIStandingCard>();
         }
+
+        // methods
+        public JSIStandingCard findById(string id) {
+            foreach (JSIStandingCard sc in this.mStandingCards) {
+                if (sc.getId() == id) {
+                    return sc;
+                }
+            }
+            return null;
+        }
     }
 }

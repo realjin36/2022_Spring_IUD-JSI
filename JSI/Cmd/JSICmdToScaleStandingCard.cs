@@ -1,5 +1,4 @@
-﻿using System.Text;
-using X;
+﻿using X;
 using UnityEngine;
 using JSI.Scenario;
 using JSI.AppObject;
@@ -122,7 +121,7 @@ namespace JSI.Cmd {
             JSIRect3D rect = (JSIRect3D)sc.getCard().getGeom();
             float w = rect.getWidth();
             float h = rect.getHeight();
-            // data.addMember("cardId", sc.getId());
+            data.addMember("cardId", sc.getId());
             data.addMember("cardWidth", w);
             data.addMember("cardHeight", h);
             return data;

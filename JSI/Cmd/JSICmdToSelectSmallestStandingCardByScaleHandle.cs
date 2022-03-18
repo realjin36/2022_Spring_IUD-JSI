@@ -1,6 +1,4 @@
-﻿using System.Text;
-using X;
-using UnityEngine;
+﻿using X;
 using JSI.Scenario;
 
 namespace JSI.Cmd {
@@ -36,7 +34,7 @@ namespace JSI.Cmd {
             XJson data = new XJson();
             JSIStandingCard sc = JSIEditStandingCardScenario.getSingleton().
                 getSelectedStandingCard();
-            // data.addMember("cardId", sc.getId());
+            data.addMember("cardId", sc.getId());
             return data;
         }
     }

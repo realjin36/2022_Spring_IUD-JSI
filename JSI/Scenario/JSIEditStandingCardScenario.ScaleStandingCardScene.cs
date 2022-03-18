@@ -5,7 +5,7 @@ using X;
 namespace JSI.Scenario {
     public partial class JSIEditStandingCardScenario : XScenario {
         public class ScaleStandingCardScene : JSIScene {
-            // singleton pattern 
+            // singleton pattern
             private static ScaleStandingCardScene mSingleton = null;
             public static ScaleStandingCardScene getSingleton() {
                 Debug.Assert(ScaleStandingCardScene.mSingleton != null);
@@ -14,11 +14,11 @@ namespace JSI.Scenario {
             public static ScaleStandingCardScene createSingleton(
                 XScenario scenario) {
                 Debug.Assert(ScaleStandingCardScene.mSingleton == null);
-                ScaleStandingCardScene.mSingleton = new 
+                ScaleStandingCardScene.mSingleton = new
                     ScaleStandingCardScene(scenario);
                 return ScaleStandingCardScene.mSingleton;
             }
-            private ScaleStandingCardScene(XScenario scenario) : 
+            private ScaleStandingCardScene(XScenario scenario) :
                 base(scenario) {
             }
 
@@ -28,7 +28,7 @@ namespace JSI.Scenario {
 
             public override void handleKeyUp(KeyCode kc) {
             }
-            
+
             public override void handlePenDown(Vector2 pt) {
             }
 
@@ -45,8 +45,8 @@ namespace JSI.Scenario {
             public override void getReady() {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
 
-                // deactivate all stands. 
-                // deactivate all scale handles. 
+                // deactivate all stands.
+                // deactivate all scale handles.
                 foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     sc.getStand().getGameObject().SetActive(false);
@@ -54,7 +54,7 @@ namespace JSI.Scenario {
                 }
 
 
-                // activate and highlight only the selected scale handle. 
+                // activate and highlight only the selected scale handle.
                 JSIStandingCard selectedSC =
                     JSIEditStandingCardScenario.getSingleton().
                     getSelectedStandingCard();
@@ -63,6 +63,8 @@ namespace JSI.Scenario {
             }
 
             public override void wrapUp() {
+                JSIApp jsi = (JSIApp)this.mScenario.getApp();
+                JSICmdToTakeSnapshot.execute(jsi);
             }
         }
     }

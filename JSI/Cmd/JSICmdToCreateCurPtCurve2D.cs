@@ -1,5 +1,4 @@
-﻿using System.Text;
-using X;
+﻿using X;
 using UnityEngine;
 using System.Collections.Generic;
 using JSI.AppObject;

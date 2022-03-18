@@ -27,6 +27,7 @@ namespace JSI.File {
     [Serializable]
     public class JSISerializableStandingCard {
         // fields
+        public string id = string.Empty;
         public float width = float.NaN;
         public float height = float.NaN;
         public JSISerializableVector3 pos = null;
@@ -35,6 +36,8 @@ namespace JSI.File {
 
         // constructor
         public JSISerializableStandingCard(JSIStandingCard sc) {
+            this.id = sc.getId();
+
             JSIRect3D rect = (JSIRect3D)sc.getCard().getGeom();
             this.width = rect.getWidth();
             this.height = rect.getHeight();
@@ -54,6 +57,7 @@ namespace JSI.File {
 
         // methods
         public JSIStandingCard toStandingCard() {
+            string id = this.id;
             float width = this.width;
             float height = this.height;
 
@@ -66,8 +70,7 @@ namespace JSI.File {
                 ptCurve3Ds.Add(ptCurve3D);
             }
 
-            return new JSIStandingCard("StandingCard", width, height, pos, rot,
-                ptCurve3Ds);
+            return new JSIStandingCard(id, width, height, pos, rot, ptCurve3Ds);
         }
     }
 }

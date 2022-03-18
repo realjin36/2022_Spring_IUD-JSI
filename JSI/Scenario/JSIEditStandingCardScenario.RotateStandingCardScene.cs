@@ -5,7 +5,7 @@ using X;
 namespace JSI.Scenario {
     public partial class JSIEditStandingCardScenario : XScenario {
         public class RotateStandingCardScene : JSIScene {
-            // singleton pattern 
+            // singleton pattern
             private static RotateStandingCardScene mSingleton = null;
             public static RotateStandingCardScene getSingleton() {
                 Debug.Assert(RotateStandingCardScene.mSingleton != null);
@@ -14,11 +14,11 @@ namespace JSI.Scenario {
             public static RotateStandingCardScene createSingleton(
                 XScenario scenario) {
                 Debug.Assert(RotateStandingCardScene.mSingleton == null);
-                RotateStandingCardScene.mSingleton = new 
+                RotateStandingCardScene.mSingleton = new
                     RotateStandingCardScene(scenario);
                 return RotateStandingCardScene.mSingleton;
             }
-            private RotateStandingCardScene(XScenario scenario) : 
+            private RotateStandingCardScene(XScenario scenario) :
                 base(scenario) {
             }
 
@@ -60,17 +60,17 @@ namespace JSI.Scenario {
 
             public override void getReady() {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
-                
-                // deactivate all stands. 
-                // deactivate all scale handles. 
-                foreach (JSIStandingCard sc in 
+
+                // deactivate all stands.
+                // deactivate all scale handles.
+                foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     sc.getStand().getGameObject().SetActive(false);
                     sc.getScaleHandle().getGameObject().SetActive(false);
                 }
 
 
-                // activate and highlight only the selected stand. 
+                // activate and highlight only the selected stand.
                 JSIStandingCard selectedSC =
                     JSIEditStandingCardScenario.getSingleton().
                     getSelectedStandingCard();
@@ -79,6 +79,8 @@ namespace JSI.Scenario {
             }
 
             public override void wrapUp() {
+                JSIApp jsi = (JSIApp)this.mScenario.getApp();
+                JSICmdToTakeSnapshot.execute(jsi);
             }
         }
     }

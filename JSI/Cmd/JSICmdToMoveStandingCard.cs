@@ -1,8 +1,6 @@
-﻿using System.Text;
-using X;
+﻿using X;
 using UnityEngine;
 using JSI.Scenario;
-using JSI.AppObject;
 
 namespace JSI.Cmd {
     public class JSICmdToMoveStandingCard : XLoggableCmd {
@@ -63,7 +61,7 @@ namespace JSI.Cmd {
             data.addMember("curPt", this.mCurPt);
             JSIStandingCard sc = JSIEditStandingCardScenario.getSingleton().
                 getSelectedStandingCard();
-            // data.addMember("cardId", sc.getId());
+            data.addMember("cardId", sc.getId());
             data.addMember("cardPos", sc.getGameObject().transform.position);
             return data;
         }

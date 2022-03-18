@@ -27,7 +27,7 @@ namespace JSI.AppObject {
         }
 
         // constructor
-        public JSIAppPolyline3D(string name, List<Vector3> pts, 
+        public JSIAppPolyline3D(string name, List<Vector3> pts,
             float width, Color color) : base($"{ name }/Polyline3D") {
 
             this.mGeom = new JSIPolyline3D(pts);
@@ -60,7 +60,7 @@ namespace JSI.AppObject {
             Vector3 ctr = polyline.calcCentroid();
             float r = polyline.calcMaxDevFrom(ctr);
 
-            SphereCollider sc = 
+            SphereCollider sc =
                 this.mGameObject.GetComponent<SphereCollider>();
             sc.center = ctr;
             sc.radius = r;

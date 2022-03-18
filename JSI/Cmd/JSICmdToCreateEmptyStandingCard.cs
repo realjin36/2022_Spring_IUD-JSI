@@ -43,11 +43,14 @@
 //             return true;
 //         }
 
-//         protected override string createLog() {
-//             StringBuilder sb = new StringBuilder();
-//             sb.Append(this.GetType().Name).Append("\t");
-//             return sb.ToString();
+//         // protected override string createLog() {
+//         //     StringBuilder sb = new StringBuilder();
+//         //     sb.Append(this.GetType().Name).Append("\t");
+//         //     return sb.ToString();
+//         // }
+//         protected override XJson createLogData() {
+//             XJson data = new XJson();
+//             return data;
 //         }
-
 //     }
 // }

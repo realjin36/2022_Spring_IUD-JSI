@@ -5,7 +5,7 @@ using X;
 namespace JSI.Scenario {
     public partial class JSINavigateScenario : XScenario {
         public class RotateReadyScene : JSIScene {
-            // singleton pattern 
+            // singleton pattern
             private static RotateReadyScene mSingleton = null;
             public static RotateReadyScene getSingleton() {
                 Debug.Assert(RotateReadyScene.mSingleton != null);
@@ -43,7 +43,7 @@ namespace JSI.Scenario {
             public override void handlePenDown(Vector2 pt) {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
 
-                foreach (JSIStandingCard sc in 
+                foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     if (jsi.getCursor().hits(sc.getStand())) {
                         JSICmdToSelectSmallestStandingCardByStand.execute(jsi);
@@ -69,8 +69,8 @@ namespace JSI.Scenario {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
 
                 // activate stands.
-                // deactivate scale handles. 
-                foreach (JSIStandingCard sc in 
+                // deactivate scale handles.
+                foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     sc.getStand().getGameObject().SetActive(true);
                     sc.highlightStand(false);

@@ -5,7 +5,7 @@ using X;
 namespace JSI.Scenario {
     public partial class JSIDrawScenario : XScenario {
         public class DrawScene : JSIScene {
-            // singleton pattern 
+            // singleton pattern
             private static DrawScene mSingleton = null;
             public static DrawScene getSingleton() {
                 Debug.Assert(DrawScene.mSingleton != null);
@@ -43,8 +43,7 @@ namespace JSI.Scenario {
             public override void getReady() {
             }
 
-            public override void wrapUp() {
-            }
+            public override void wrapUp() {}
         }
     }
 }

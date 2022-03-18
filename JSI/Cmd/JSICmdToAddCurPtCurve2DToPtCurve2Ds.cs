@@ -1,9 +1,7 @@
-﻿using System.Text;
-using X;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using X;
 using JSI.AppObject;
 using JSI.Geom;
+using System.Linq;
 
 namespace JSI.Cmd {
     public class JSICmdToAddCurPtCurve2DToPtCurve2Ds : XLoggableCmd {

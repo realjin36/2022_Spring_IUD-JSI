@@ -13,6 +13,10 @@ namespace JSI {
         public static readonly float SCALE_HANDLE_RADIUS = 0.1f; // in meter
 
         // fields
+        private string mId = string.Empty;
+        public string getId() {
+            return this.mId;
+        }
         private JSIAppRect3D mCard = null;
         public JSIAppRect3D getCard() {
             return this.mCard;
@@ -31,9 +35,11 @@ namespace JSI {
         }
 
         // constructor
-        public JSIStandingCard(string name, float width, float height, 
-            Vector3 pos, Quaternion rot, 
-            List<JSIAppPolyline3D> ptCurve3Ds) : base(name) {
+        public JSIStandingCard(string id, float width, float height,
+            Vector3 pos, Quaternion rot,
+            List<JSIAppPolyline3D> ptCurve3Ds) : base($"StandingCard({ id })") {
+
+            this.mId = id;
 
             this.mGameObject.transform.localPosition = pos;
             this.mGameObject.transform.localRotation = rot;
@@ -50,7 +56,7 @@ namespace JSI {
             this.mStand.getGameObject().transform.localPosition = standLocalPos;
             this.mStand.getGameObject().transform.localRotation = standLocalRot;
 
-            // create a scale handle. 
+            // create a scale handle.
             Vector3 scaleHandleLocalPos = 0.5f * height * Vector3.up;
             this.mScaleHandle = new JSIAppCircle3D("ScaleHandle",
                 JSIStandingCard.SCALE_HANDLE_RADIUS,
@@ -63,7 +69,7 @@ namespace JSI {
             this.addChild(this.mStand);
             this.addChild(this.mScaleHandle);
 
-            // add the 3D point curves to the card. 
+            // add the 3D point curves to the card.
             if (ptCurve3Ds == null) {
                 return;
             } else {

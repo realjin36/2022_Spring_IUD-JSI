@@ -5,7 +5,7 @@ using X;
 namespace JSI.Scenario {
     public partial class JSIEditStandingCardScenario : XScenario {
         public class MoveStandingCardScene : JSIScene {
-            // singleton pattern 
+            // singleton pattern
             private static MoveStandingCardScene mSingleton = null;
             public static MoveStandingCardScene getSingleton() {
                 Debug.Assert(MoveStandingCardScene.mSingleton != null);
@@ -14,11 +14,11 @@ namespace JSI.Scenario {
             public static MoveStandingCardScene createSingleton(
                 XScenario scenario) {
                 Debug.Assert(MoveStandingCardScene.mSingleton == null);
-                MoveStandingCardScene.mSingleton = new 
+                MoveStandingCardScene.mSingleton = new
                     MoveStandingCardScene(scenario);
                 return MoveStandingCardScene.mSingleton;
             }
-            private MoveStandingCardScene(XScenario scenario) : 
+            private MoveStandingCardScene(XScenario scenario) :
                 base(scenario) {
             }
 
@@ -58,8 +58,8 @@ namespace JSI.Scenario {
             public override void getReady() {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
 
-                // deactivate all stands. 
-                // deactivate all scale handles. 
+                // deactivate all stands.
+                // deactivate all scale handles.
                 foreach (JSIStandingCard sc in
                     jsi.getStandingCardMgr().getStandingCards()) {
                     sc.getStand().getGameObject().SetActive(false);
@@ -67,7 +67,7 @@ namespace JSI.Scenario {
                 }
 
 
-                // activate and highlight only the selected stand. 
+                // activate and highlight only the selected stand.
                 JSIStandingCard selectedSC =
                     JSIEditStandingCardScenario.getSingleton().
                     getSelectedStandingCard();
@@ -76,6 +76,8 @@ namespace JSI.Scenario {
             }
 
             public override void wrapUp() {
+                JSIApp jsi = (JSIApp)this.mScenario.getApp();
+                JSICmdToTakeSnapshot.execute(jsi);
             }
         }
     }

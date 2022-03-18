@@ -1,13 +1,14 @@
 ﻿using JSI.AppObject;
 using JSI.Geom;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using X;
 
 namespace JSI.Cmd {
     public class JSICmdToCreateStandingCard : XLoggableCmd {
+        // fields
+        private JSIStandingCard mSc = null;
+
         // private constructor
         private JSICmdToCreateStandingCard(XApp app) : base(app) {
         }
@@ -79,11 +80,11 @@ namespace JSI.Cmd {
             float cardWidth = this.calcCardWidth(localPtCurve3Ds);
             float cardHeight = this.calcCardHeight(localPtCurve3Ds);
             Quaternion q = Quaternion.LookRotation(cardZDir, cardYDir);
-            JSIStandingCard sc = new JSIStandingCard("StandingCard",
+            this.mSc = new JSIStandingCard(JSIUtil.createId(),
                 cardWidth, cardHeight, cardCtr, q, localPtCurve3Ds);
 
             // add the standing card to its manager.
-            jsi.getStandingCardMgr().getStandingCards().Add(sc);
+            jsi.getStandingCardMgr().getStandingCards().Add(this.mSc);
 
             return true;
         }
@@ -91,7 +92,7 @@ namespace JSI.Cmd {
         protected override XJson createLogData() {
             JSIApp jsi = (JSIApp)this.mApp;
             XJson data = new XJson();
-            // data.addMember("cardId", this.mSc.getId());
+            data.addMember("cardId", this.mSc.getId());
             return data;
         }
 

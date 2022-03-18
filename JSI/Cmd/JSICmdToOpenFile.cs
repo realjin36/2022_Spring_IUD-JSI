@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using JSI.File;
 using UnityEditor;
 using UnityEngine;
@@ -30,7 +29,14 @@ namespace JSI.Cmd {
 
             // pressed 'OPEN' button
             if (this.mFilePath != string.Empty) {
-                return this.readFile(this.mFilePath);
+                if (this.readFile(this.mFilePath)) {
+                    jsi.getSnapshotMgr().takeSnapshot();
+                    // prev undo by unlinking the snapshot to prev snapshot
+                    jsi.getSnapshotMgr().getCurSnapshot().setPrevSnapshot(null);
+                    return true;
+                } else {
+                    return false;
+                }
             // pressed 'CANCEL' button
             } else {
                 return false;
