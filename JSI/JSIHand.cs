@@ -1,5 +1,6 @@
 using JSI.AppObject;
 using UnityEngine;
+using System;
 
 /*
 Reference: https://developer.oculus.com/documentation/unity/unity-handtracking/
@@ -37,7 +38,11 @@ t: tip
 namespace JSI {
     public class JSIHand : JSIAppObject3D {
         // constants
-        public enum Handedness { LEFT, RIGHT };
+        [Flags]
+        public enum Handedness {
+            LEFT = 1,
+            RIGHT = 2
+        }        
 
         // fields
         private Handedness mHandedness;

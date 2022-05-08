@@ -133,7 +133,14 @@ namespace JSI.Scenario {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
                 JSIHand leftHand = jsi.getHandMgr().getLeftHand();
                 Vector3 leftPinchPos = leftHand.calcPinchPos();
-                JSIUtil.createDebugSphere(leftPinchPos);
+
+                if (JSICmdToSelectStandingCardByPinch.execute(jsi,
+                    JSIHand.Handedness.LEFT)) {
+                    XCmdToChangeScene.execute(jsi,JSIEditStandingCardScenario.
+                        MoveWithSinglePinchScene.getSingleton(), this);
+                } else {
+                    JSIUtil.createDebugSphere(leftPinchPos);
+                }
             }
 
             public override void handleLeftPinchEnd() {
@@ -147,7 +154,14 @@ namespace JSI.Scenario {
                 JSIApp jsi = (JSIApp)this.mScenario.getApp();
                 JSIHand rightHand = jsi.getHandMgr().getRightHand();
                 Vector3 rightPinchPos = rightHand.calcPinchPos();
-                JSIUtil.createDebugSphere(rightPinchPos);
+
+                if (JSICmdToSelectStandingCardByPinch.execute(jsi,
+                    JSIHand.Handedness.RIGHT)) {
+                    XCmdToChangeScene.execute(jsi,JSIEditStandingCardScenario.
+                        MoveWithSinglePinchScene.getSingleton(), this);
+                } else {
+                    JSIUtil.createDebugSphere(rightPinchPos);
+                }
             }
 
             public override void handleRightPinchEnd() {

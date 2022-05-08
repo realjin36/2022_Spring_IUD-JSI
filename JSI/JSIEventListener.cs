@@ -225,24 +225,32 @@ namespace JSI {
             curscene.handleVRHeadsetUnmount();
         }
         public void leftPinchStart() {
-            JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
-                getCurScene();
-            curscene.handleLeftPinchStart();
+            if (this.mJSI.getHandMgr().pinchStart(JSIHand.Handedness.LEFT)) {
+                JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
+                    getCurScene();
+                curscene.handleLeftPinchStart();
+            }
         }
         public void leftPinchEnd() {
-            JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
-                getCurScene();
-            curscene.handleLeftPinchEnd();
+            if (this.mJSI.getHandMgr().pinchEnd(JSIHand.Handedness.LEFT)) {
+                JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
+                    getCurScene();
+                curscene.handleLeftPinchEnd();
+            }            
         }
         public void rightPinchStart() {
-            JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
-                getCurScene();
-            curscene.handleRightPinchStart();
+            if (this.mJSI.getHandMgr().pinchStart(JSIHand.Handedness.RIGHT)) {
+                JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
+                    getCurScene();
+                curscene.handleRightPinchStart();
+            }                
         }
         public void rightPinchEnd() {
-            JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
-                getCurScene();
-            curscene.handleRightPinchEnd();
+            if (this.mJSI.getHandMgr().pinchEnd(JSIHand.Handedness.RIGHT)) {
+                JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().
+                    getCurScene();
+                curscene.handleRightPinchEnd();
+            }                
         }
         public void handsMove() {
             JSIScene curscene = (JSIScene)this.mJSI.getScenarioMgr().

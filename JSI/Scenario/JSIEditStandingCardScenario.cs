@@ -35,6 +35,10 @@ namespace JSI.Scenario {
                 createSingleton(this));
             this.addScene(JSIEditStandingCardScenario.MoveNRotateWithTouchScene.
                 createSingleton(this));
+            this.addScene(JSIEditStandingCardScenario.MoveWithSinglePinchScene.
+                createSingleton(this));
+            this.addScene(JSIEditStandingCardScenario.MoveWithDoublePinchScene.
+                createSingleton(this));
         }
 
         // fields
@@ -48,6 +52,34 @@ namespace JSI.Scenario {
         private List<JSITouchMark> mManipulatingTouchMarks = null;
         public List<JSITouchMark> getManipulatingTouchMarks() {
             return this.mManipulatingTouchMarks;
+        }
+        private JSIStandingCard mManipulaingStandingCardByLeftHand = null;
+        public JSIStandingCard getManipulaingStandingCardByLeftHand() {
+            return this.mManipulaingStandingCardByLeftHand;
+        }
+        public void setManipulatingStandingCardByLeftHand(JSIStandingCard sc) {
+            this.mManipulaingStandingCardByLeftHand = sc;
+        }
+        private JSIStandingCard mManipulaingStandingCardByRightHand = null;
+        public JSIStandingCard getManipulaingStandingCardByRightHand() {
+            return this.mManipulaingStandingCardByRightHand;
+        }
+        public void setManipulatingStandingCardByRightHand(JSIStandingCard sc) {
+            this.mManipulaingStandingCardByRightHand = sc;
+        }
+        private Vector3 mLastLeftPinchPos;
+        public Vector3 getLastLeftPinchPos() {
+            return this.mLastLeftPinchPos;
+        }
+        public void setLastLeftPinchPos(Vector3 pos) {
+            this.mLastLeftPinchPos = pos;
+        }
+        private Vector3 mLastRightPinchPos;
+        public Vector3 getLastRightPinchPos() {
+            return this.mLastRightPinchPos;
+        }
+        public void setLastRightPinchPos(Vector3 pos) {
+            this.mLastRightPinchPos = pos;
         }
 
         // methods
